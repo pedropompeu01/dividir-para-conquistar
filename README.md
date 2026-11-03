@@ -4,8 +4,6 @@ Comparação entre algoritmos de **divisão e conquista** e de **força bruta** 
 clássicos, o subarranjo de soma máxima e o par de pontos mais próximos, com medição real dos
 tempos de execução.
 
-**Autor:** Pedro Pompeu
-
 ## Sobre o projeto
 
 Divisão e conquista é uma técnica que quebra um problema em partes menores, resolve cada parte
