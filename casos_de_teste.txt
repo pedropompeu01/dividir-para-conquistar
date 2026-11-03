@@ -1,0 +1,195 @@
+# Casos de teste - Divisão e Conquista
+# Etapa 1: entrada "n v1 ... vn", saída "soma inicio fim" (dias a partir de 1)
+# Etapa 2: entrada "n x1 y1 ... xn yn", saída "distancia i j" (estações a partir de 1)
+# ERRO: entrada inválida (o programa mostra erro e sai com código 1)
+# As saídas são as do modo --simples. Para rodar todos: python testes.py
+
+[etapa1] exemplo_classico
+Por que: positivos e negativos; o melhor intervalo passa por um negativo
+Entrada: 9  -2 1 -3 4 -1 2 1 -5 4
+Saída esperada: 6 4 7
+
+[etapa1] so_negativos
+Por que: só negativos, a resposta é o maior elemento (não pode dar 0)
+Entrada: 5  -5 -2 -8 -1 -3
+Saída esperada: -1 4 4
+
+[etapa1] so_negativos_com_empate
+Por que: só negativos com empate, fica o de menor início
+Entrada: 4  -3 -1 -7 -1
+Saída esperada: -1 2 2
+
+[etapa1] tamanho_1_positivo
+Por que: menor entrada possível (caso base da recursão)
+Entrada: 1  7
+Saída esperada: 7 1 1
+
+[etapa1] tamanho_1_negativo
+Por que: caso base com valor negativo (não pode virar 0)
+Entrada: 1  -7
+Saída esperada: -7 1 1
+
+[etapa1] empate_inicios_diferentes
+Por que: dois intervalos separados com a mesma soma, fica o de menor início
+Entrada: 3  3 -5 3
+Saída esperada: 3 1 1
+
+[etapa1] empate_mesmo_inicio
+Por que: mesmo início e fins diferentes, fica o de menor fim
+Entrada: 3  2 -2 2
+Saída esperada: 2 1 1
+
+[etapa1] empate_tamanhos_diferentes
+Por que: empate entre intervalos de tamanhos diferentes, decide o início
+Entrada: 4  1 2 -10 3
+Saída esperada: 3 1 2
+
+[etapa1] zeros_nas_pontas
+Por que: os zeros geram vários empates ao mesmo tempo
+Entrada: 5  0 0 5 0 0
+Saída esperada: 5 1 3
+
+[etapa1] todos_zeros
+Por que: todos os intervalos somam 0, fica o primeiro dia
+Entrada: 4  0 0 0 0
+Saída esperada: 0 1 1
+
+[etapa1] empate_esquerda_cruzado_direita
+Por que: empate entre a metade esquerda, o meio e a direita (combinação da D&C)
+Entrada: 6  4 -9 1 3 -9 4
+Saída esperada: 4 1 1
+
+[etapa1] todos_positivos
+Por que: a resposta é o vetor inteiro
+Entrada: 4  1 2 3 4
+Saída esperada: 10 1 4
+
+[etapa1] melhor_no_fim
+Por que: resposta no fim do vetor (limite do laço)
+Entrada: 4  -1 -2 5 6
+Saída esperada: 11 3 4
+
+[etapa1] melhor_cruza_o_meio
+Por que: a resposta só aparece no passo que cruza o meio
+Entrada: 5  -10 2 3 4 -10
+Saída esperada: 9 2 4
+
+[etapa1] exemplo_clrs
+Por que: exemplo clássico do livro do Cormen (seção 4.1), resposta conhecida
+Entrada: 16  13 -3 -25 20 -3 -16 -23 18 20 -7 12 -5 -22 15 -4 7
+Saída esperada: 43 8 11
+
+[etapa1] alternado
+Por que: vale a pena atravessar perdas pequenas
+Entrada: 6  5 -1 5 -1 5 -1
+Saída esperada: 13 1 5
+
+[etapa1] valores_grandes
+Por que: a soma passa de 2^31 - 1 (estouraria um int de 32 bits)
+Entrada: 3  2000000000 2000000000 -1
+Saída esperada: 4000000000 1 2
+
+[etapa1] erro_n_zero
+Por que: n = 0 é inválido
+Entrada: 0
+Saída esperada: ERRO
+
+[etapa1] erro_faltam_valores
+Por que: faltam valores
+Entrada: 4  1 2 3
+Saída esperada: ERRO
+
+[etapa1] erro_valor_nao_inteiro
+Por que: valor que não é inteiro
+Entrada: 3  1 2.5 3
+Saída esperada: ERRO
+
+[etapa1] erro_entrada_vazia
+Por que: entrada vazia
+Entrada:
+Saída esperada: ERRO
+
+[etapa2] dois_pontos
+Por que: menor entrada (um único par)
+Entrada: 2  0 0  3 4
+Saída esperada: 5.000000 1 2
+
+[etapa2] tres_pontos
+Por que: caso base clássico (n = 3), par fora de ordem
+Entrada: 3  0 0  10 10  1 1
+Saída esperada: 1.414214 1 3
+
+[etapa2] pontos_coincidentes
+Por que: duas estações no mesmo lugar, distância 0
+Entrada: 3  1 1  5 5  1 1
+Saída esperada: 0.000000 1 3
+
+[etapa2] varios_grupos_coincidentes
+Por que: vários pares com distância 0, fica o menor par
+Entrada: 4  2 2  7 7  7 7  2 2
+Saída esperada: 0.000000 1 4
+
+[etapa2] todos_com_mesmo_x
+Por que: todos na mesma vertical, a linha divisória passa por todos
+Entrada: 5  0 0  0 10  0 3  0 7  0 20
+Saída esperada: 3.000000 1 3
+
+[etapa2] todos_com_mesmo_y
+Por que: todos na mesma horizontal
+Entrada: 5  0 5  9 5  4 5  2 5  15 5
+Saída esperada: 2.000000 1 4
+
+[etapa2] par_cruza_a_divisao
+Por que: o par mais próximo tem um ponto de cada lado da linha (só a faixa acha)
+Entrada: 6  20 0  9 10  0 20  10 10  0 0  20 20
+Saída esperada: 1.000000 2 4
+
+[etapa2] par_na_borda_da_faixa
+Por que: ponto a exatamente delta da linha, a faixa precisa usar <=
+Entrada: 6  5 0  7 0  0 10  0 12  20 30  20 50
+Saída esperada: 2.000000 1 2
+
+[etapa2] empates_em_grade
+Por que: grade 3x3 com vários pares a distância 1, fica o menor par
+Entrada: 9  2 2  0 1  1 0  2 0  0 0  1 2  0 2  2 1  1 1
+Saída esperada: 1.000000 1 6
+
+[etapa2] coordenadas_negativas
+Por que: coordenadas negativas
+Entrada: 4  -5 -5  -1 -2  3 1  -4 -4
+Saída esperada: 1.414214 1 4
+
+[etapa2] coordenadas_reais
+Por que: coordenadas com casas decimais
+Entrada: 4  0.5 0.5  1.25 0.5  3.0 3.0  0.5 1.5
+Saída esperada: 0.750000 1 2
+
+[etapa2] coordenadas_grandes
+Por que: coordenadas perto de 10^9 (distância ao quadrado passa de 10^18)
+Entrada: 3  1000000000 1000000000  1000000001 1000000001  -1000000000 0
+Saída esperada: 1.414214 1 2
+
+[etapa2] colineares_na_diagonal
+Por que: pontos alinhados na diagonal
+Entrada: 5  0 0  1 1  3 3  6 6  10 10
+Saída esperada: 1.414214 1 2
+
+[etapa2] erro_uma_estacao
+Por que: com uma estação não existe par
+Entrada: 1  0 0
+Saída esperada: ERRO
+
+[etapa2] erro_coordenada_faltando
+Por que: falta uma coordenada
+Entrada: 3  0 0  1 1  2
+Saída esperada: ERRO
+
+[etapa2] erro_coordenada_invalida
+Por que: texto no lugar de número
+Entrada: 2  0 0  1 abc
+Saída esperada: ERRO
+
+[etapa2] erro_coordenada_nao_finita
+Por que: nan e inf não são coordenadas válidas
+Entrada: 2  0 0  nan 1
+Saída esperada: ERRO
